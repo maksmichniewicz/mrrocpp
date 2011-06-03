@@ -110,31 +110,34 @@ bool g_mm_test::next_step()
 	//double fz = force_torque[2];
 	std::cout << fx << " " << fy << " " << std::endl;
 
-	/*obecnosc pilki*/
-	double granica = 1.2;
 
-	if(abs(fx)>granica || abs(fy)>granica)
-	{
-		std::cout <<"JEST PILKA"<<std::endl;
-		licznik_uderzen+=1;
-	}
+	//NIE CZUJE PILKI ZA WCZESNIE - POPRAWIC + NIE CZUJE BEDAC JESZCE W GORZE _ ZMIENIC!
 
-	if(index > 10)//ustawic, nie za male bo na starcie bedzie sie cofal
-	{
-		if(licznik_uderzen>1)
-		{
-			zgubiona_pilka=false;
-			std::cout <<"JEST PILKA po 10 index"<<std::endl;
-			index=1;
-		}
-		else
-		{
-			zgubiona_pilka=true;
-			std::cout <<"NIE MA  KULKI"<<std::endl;
-			GEN_REPLY = 'E';
-			return false;
-		}
-	}
+//	/*obecnosc pilki*/
+//	double granica = 1.2;
+//
+//	if(abs(fx)>granica || abs(fy)>granica)
+//	{
+//		std::cout <<"JEST PILKA"<<std::endl;
+//		licznik_uderzen+=1;
+//	}
+//
+//	if(index > 10)//ustawic, nie za male bo na starcie bedzie sie cofal
+//	{
+//		if(licznik_uderzen>1)
+//		{
+//			zgubiona_pilka=false;
+//			std::cout <<"JEST PILKA po 10 index"<<std::endl;
+//			index=1;
+//		}
+//		else
+//		{
+//			zgubiona_pilka=true;
+//			std::cout <<"NIE MA  KULKI"<<std::endl;
+//			GEN_REPLY = 'E';
+//			return false;
+//		}
+//	}
 
 	/*silne zderzenie ze sciana*/
 	double stop = 5.0;
