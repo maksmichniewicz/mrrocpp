@@ -65,12 +65,23 @@ void mmtest::create_robots()
 
 }
 
-mmtest::mmtest(lib::configurator &_config) :
-		task(_config)
+mmtest::mmtest(lib::configurator &config) :
+		task(config)
 {
 
+	/*w tryju bo nie lapie komunikatu, mozna tez macierze jak w matlabie Eigen::matrix
+	config.exists("","[]");
+	config.value("","[]");*/
+	//const std::string config_section = { "[Macierz]" };
+
+	Eigen::Matrix <double, 3, 4> real_position = config.value <3, 4> ("real_position");
+	//lib::Homog_matrix
+	//lib::Homog_matrix real(real_position);
+
+
+
 	sr_ecp_msg->message("DS test");
-	char config_section_name[] = { "[DS Labirynth]" };
+	char config_section_name = { "[DS Labirynth]" };
 	ds = boost::shared_ptr <mrrocpp::ecp_mp::sensor::discode::discode_sensor>(new mrrocpp::ecp_mp::sensor::discode::discode_sensor(config, config_section_name));
 
 	sr_ecp_msg->message("before ds.configure_sensor()\n");
@@ -80,6 +91,47 @@ mmtest::mmtest(lib::configurator &_config) :
 	ERROR = false;
 	path.clear();
 }
+
+void mmtest::labirynth_config(lib::Homog_matrix idealna, lib::Homog_matrix realna)
+{
+	lib::Homog_matrix przejscia = (!idealna) * realna;
+	if(przejscia.is_valid())
+	{
+		double trans_vect[3];
+		przejscia.get_translation_vector(trans_vect);
+	}
+	else
+	{}
+
+/*
+	//dane
+	double x1,y1,x2,y2;//2 pkt chciane
+	double x1prim,y1prim,x2prim,y2prim;//2 pkt rzeczywiste
+
+	//szukane
+	double dx,dy;//roznica miedzy p1 a p1prim
+	double alfa,cos_alfa;//szukany kat
+
+	dx = x1prim - x1;
+	dy = y1prim - y1;
+
+	x2prim =- dx;
+	y2prim =- dy;
+
+	vx2 = (x2-x1);
+	vy2 = (y2-y1);
+	vx2prim = (x2prim-x1);
+	vy2prim = (y2prim-y1);
+	z = sqrt(vx2*vx2+vy2*vy2);
+	zprim = sqrt(vx2prim*vx2prim+vy2prim*vy2prim);
+
+	cos_alfa = (vx2*vx2prim+vy2*vy2prim)/(z*zprim);
+*/
+	//
+	//x2 = cos(alfa)*x2prim - sin(alfa)*y2prim + x1*(1-cos(alfa))+y1*sin(alfa);
+	//y2 = sin(alfa)*x2prim + cos(alfa)*y2prim + y1*(1-cos(alfa))-x1*sin(alfa);
+}
+
 
 
 /*

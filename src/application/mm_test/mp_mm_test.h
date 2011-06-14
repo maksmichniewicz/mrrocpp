@@ -40,10 +40,8 @@ public:
 	/// utworzenie robotow
 	void create_robots(void);
 	void runWaitFunction(int time);
-	/*void executeMotion(common::State &state);
-	void runEmptyGenForSet(common::State &state);
-	void runEmptyGen(common::State &state);
-	void runWaitFunction(common::State &state);*/
+
+	void labirynth_config(lib::Homog_matrix idealna, lib::Homog_matrix realna);
 
 	void set_path();
 private:
